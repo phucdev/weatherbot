@@ -19,7 +19,7 @@ Einfache Negation in der Frage sollte beachtet werden und Aussagesätze zum Wett
 ## Python Module und APIs
 ##### NTLK
 Im Kurs wurde viel mit dem Natural Language Toolkit (http://www.nltk.org/) gearbeitet. Deshalb wird es auch für dieses Projekt verwendet.
-Das Python-Modul kann man ganz einfach mit diesem Befehl installieren: 
+Das Python-Modul kann man ganz einfach mit diesem Befehl installieren:<br> 
 `python3 -m pip install nltk`
 
 ##### OpenWeatherAPI, pyowm
