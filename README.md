@@ -69,9 +69,9 @@ Die Anbindung an die Wetter API ist nicht schwer, weil das Python Modul OWM die 
 Das Python Skript weather.py übernimmt da die ganze Arbeit. Alle weiteren Wetter-Funktionen sollten dort reingeschrieben werden.
 
 Im Wesentlichen gibt es drei Variablen:
-- Ort → place
-- Zeit → time
-- Typ von Abfrage (Wetter, Temperatur, sunny?, rainy?, random) → query  
+- place → Ort
+- time → Zeit 
+- query → Typ von Abfrage (Wetter, Temperatur, sunny?, rainy?, random)  
 
 ### Probleme
 Das Schwierigste ist tatsächlich die Verarbeitung des Inputs (extractor.py).
@@ -79,8 +79,7 @@ Das Schwierigste ist tatsächlich die Verarbeitung des Inputs (extractor.py).
 - Zeit erkennen
 - Art der Wetterabfrage erkennen
 - Rechtschreibfehler erkennen, behandeln (ideal: “Meintest du vielleicht?”)
+- ungültigen Input behandeln
 
-Die größten Probleme sind denke ich:
-- Rechtschreibprüfung und Korrektur
-- Verarbeitung, Erkennen der Variablen (Ort, Zeit, Fragentyp)
+Ein weiteres Problem ist die Anbindung an die Telegram Bot API, weil ich noch keine Erfahrung damit habe.
 - Output im Bot (wetterbot.py)
