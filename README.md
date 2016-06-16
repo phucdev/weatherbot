@@ -52,7 +52,7 @@ Ich würde die Telegram API bevorzugen, da man sich auf Facebook Messenger als F
 Die Telegram Bot API: https://core.telegram.org/bots
 
 Mockup als Telegram-Bot
-![Wetterbot](/Dialog.png?raw=true "Als Bot in Telegram")
+![Wetterbot](/iOS Mockup.png?raw=true "Als Bot in Telegram")
 
 ## Struktur des Projekts und zentrale Probleme
 
