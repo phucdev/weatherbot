@@ -1,5 +1,5 @@
 # Wetterbot
-Interprets questions about weather in natural language and (hopefully) delivers adequate information about the weather. 
+Interprets questions about the weather in natural language and (hopefully) delivers adequate information about the weather. 
 This is a group project that I'll be doing for the course "Einführung in die maschinelle Sprachverarbeitung mit Python". 
 In the initial phase it will only work with German input. 
 The rest of the readme.md will be in German.
