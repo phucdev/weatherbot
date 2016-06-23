@@ -22,15 +22,15 @@ Im Kurs wurde viel mit dem Natural Language Toolkit (http://www.nltk.org/) gearb
 Das Python-Modul kann man ganz einfach mit diesem Befehl installieren:<br> 
 `python3 -m pip install nltk`
 
-##### OpenWeatherAPI, pyowm
+##### OpenWeatherAPI, pyowm, ipinfo, requests
 Für das Projekt wird die OpenWeatherMAP API benutzt. Für einen API Key muss man sich dort registrieren. Es gibt einen kostenlosen Plan. 
-Als Hilfsmittel wird das Python Modul “pyowm” verwendet.<br>
+Als Hilfsmittel wird das Python-Modul “pyowm” verwendet.<br>
 https://pyowm.readthedocs.io/en/latest/ <br>
 Konkret interessant werden wohl diese Teile der Dokumentation sein: <br>
 https://pyowm.readthedocs.io/en/latest/pyowm.webapi25.html#module-pyowm.webapi25.observation <br>
 https://pyowm.readthedocs.io/en/latest/pyowm.utils.html <br>
 
-Das Python-Modul kann man ganz einfach mit diesem Befehl installieren: 
+Das Python-Modul kann man ganz einfach mit diesem Befehl installieren: <br>
 `python3 -m pip install pyowm`
 
 Ein Anfang wäre:
@@ -44,6 +44,18 @@ w = observation.get_weather()
 print(w.get_temperature('celsius')['temp'])
 ~~~~
 Das Ding gibt die momentane Temperatur in Berlin aus. Das Skript owmtest.py ist noch ein wenig ausführlicher und zeigt weitere Funktionalitäten von pyowm.
+
+Falls der User keinen Ort angibt, lässt sich mittels der IP Geolocation API der Ort des Users anhand seiner IP Adresse bestimmen. <br>
+http://ipinfo.io/developers <br>
+Dazu benötigt man das Python-Modul "requests": <br> 
+`python3 -m pip install requests`
+
+Das hier gibt die Stadt aus.
+~~~~
+import requests
+r = requests.get('http://ipinfo.io/city')
+print(r.text)
+~~~~
 
 ##### Telegram Bot API
 Idealerweise hätte das Projekt eine GUI mit Antworten, die mit graphischen Elemente (Symbole für Regen, Sonne usw.) geschmückt werden.
