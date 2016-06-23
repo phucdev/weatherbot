@@ -45,7 +45,7 @@ Beispiele für Fragen sind: </p>
 Einfache Negation in der Frage sollte beachtet werden und Aussagesätze zum Wetter statt Fragen sollten mit True/False beantwortet werden können bzw. “Das ist richtig.”, “Nein, das stimmt so nicht.”</p>
 
 <h2>
-<a id="python-module-und-apis" class="anchor" href="#python-module-und-apis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Module und APIs</h2>
+<a id="python-module-und-apis" class="anchor" href="#python-module-und-apis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python-Module und APIs</h2>
 
 <h5>
 <a id="ntlk" class="anchor" href="#ntlk" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NTLK</h5>
@@ -55,7 +55,7 @@ Das Python-Modul kann man ganz einfach mit diesem Befehl installieren: <br>
 <code>python3 -m pip install nltk</code></p>
 
 <h5>
-<a id="openweatherapi-pyowm" class="anchor" href="#openweatherapi-pyowm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>OpenWeatherAPI, pyowm</h5>
+<a id="openweatherapi-pyowm-ip-geolocation-api-requests" class="anchor" href="#openweatherapi-pyowm-ip-geolocation-api-requests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>OpenWeatherAPI, pyowm, IP Geolocation API, requests</h5>
 
 <p>Für das Projekt wird die OpenWeatherMAP API benutzt. Für einen API Key muss man sich dort registrieren. Es gibt einen kostenlosen Plan. 
 Als Hilfsmittel wird das Python Modul “pyowm” verwendet.<br>
@@ -79,6 +79,17 @@ print(w.get_temperature('celsius')['temp'])
 </code></pre>
 
 <p>Das Ding gibt die momentane Temperatur in Berlin aus. Das Skript owmtest.py ist noch ein wenig ausführlicher und zeigt weitere Funktionalitäten von pyowm.</p>
+
+<p>Falls der User keinen Ort angibt, lässt sich mittels der IP Geolocation API der Ort des Users anhand seiner IP Adresse bestimmen: <a href="http://ipinfo.io/developers">http://ipinfo.io/developers</a> <br>
+Dazu benötigt man das Python-Modul "requests": <br> 
+<code>python3 -m pip install requests</code></p>
+
+<p>Das hier gibt die Stadt aus.</p>
+
+<pre><code>import requests
+r = requests.get('http://ipinfo.io/city')
+print(r.text)
+</code></pre>
 
 <h5>
 <a id="telegram-bot-api" class="anchor" href="#telegram-bot-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Telegram Bot API</h5>
