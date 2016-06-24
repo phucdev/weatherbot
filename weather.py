@@ -8,6 +8,7 @@
 
 from nltk.tokenize import word_tokenize
 import math
+import requests
 import pyowm
 
 owm = pyowm.OWM('0ce70d38fc4aaade9c6f004e226e8a61')
@@ -44,7 +45,11 @@ def humidity(w):
 def weather(w,forecast,time):
     return sunny(forecast,time)+rainy(forecast,time)+temperature(w)+wind(w)+humidity(w)
 
-def deliver(p, t, q):
+def locate():
+    r = requests.get('http://ipinfo.io/city')
+    return r.text
+
+def deliver(t='aktuell', p=locate(), q='wetter'):
     observation = owm.weather_at_place(p)
     forecast = owm.daily_forecast(p)
     w = observation.get_weather()
@@ -53,6 +58,6 @@ def deliver(p, t, q):
     else:
         when = pyowm.timeutils.tomorrow()
     if q.lower() == 'temperatur':
-        return temperature(w)
+        return p + ": " + temperature(w)
     else:
-        return weather(w,forecast,when)
+        return p + ": " + weather(w,forecast,when)
