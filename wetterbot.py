@@ -1,11 +1,16 @@
 #! /usr/bin/env python
 
 # Autor: Phuc Tran Truong
-# Datum: 14.06.2016
+# Datum: 25.06.2016
 # Wetter Bot
 import weather
 import extractor
 
-print('Was möchtest du zum Wetter wissen?')
-request = input('time, place, type of query:  ')
-print(weather.deliver())
+# Starre Reihenfolge, nur drei Argumente
+print('Aktuell/Morgen Ort Wetter/Temperatur')
+request = input('>>> ')
+extr_request = extractor.get_args(request)
+try:
+    print(weather.deliver(*extr_request))
+except TypeError:
+    print(weather.deliver(extr_request[0],extr_request[1],extr_request[2]))

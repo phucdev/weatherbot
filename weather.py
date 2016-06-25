@@ -1,10 +1,10 @@
 #! /usr/bin/env python
 
 # Autor: Phuc Tran Truong
-# Datum: 22.06.2016
+# Datum: 25.06.2016
 # Stellt die Wetterdaten als String bereit
 
-# Ort, Zeit und Wetter/Temperatur/rainy/sunny sollen an dieses Modul übergeben werden
+# Ort, Zeit und Wetter/Temperatur sollen an dieses Modul übergeben werden
 
 from nltk.tokenize import word_tokenize
 import math
@@ -13,25 +13,32 @@ import pyowm
 
 owm = pyowm.OWM('0ce70d38fc4aaade9c6f004e226e8a61')
 
-def temperature(w):
-    temp = w.get_temperature('celsius')
-    s = "Die Höchsttemparatur wird tagsüber bei " + str(round(w.get_temperature('celsius')['temp_max'], 1))+"° und die Tiefsttemperatur heute Nacht bei " + str(round(w.get_temperature('celsius')['temp_min'], 1))+"° liegen. Momentan sind es " + str(round(w.get_temperature('celsius')['temp'], 1))+"°. "
+def humidity(w_data):
+    return "Die Luftfeuchtigkeit beträgt " + str(w_data['humidity']) + " %. "
+
+def temperature(w_data):
+    # "Die Höchsttemparatur wird tagsüber bei " + str(round(w.get_temperature('celsius')['temp_max'], 1))+"° und die Tiefsttemperatur heute Nacht bei " + str(round(w.get_temperature('celsius')['temp_min'], 1))+"° liegen.
+    s = "Es sind " + str(round(w_data['temperature']['temp'], 1))+" °C. "
     return s
 
-def rainy(forecast,time):
-    if forecast.will_be_rainy_at(time):
+def rainy(w_data):
+    if w_data['rainy']:
         return "Es regnet. "
     else:
-        return ''
+        return "Es regnet nicht. "
 
-def sunny(forecast,time):
-    if forecast.will_be_sunny_at(time):
+def sunny(w_data):
+    if w_data['sunny']:
         return "Es ist sonnig. "
     else:
-        return ''
+        return "Es ist nicht sonnig. "
 
-def wind(w):
-    return "Wind: " + getDirection(w.get_wind()['deg']) + " " + str(w.get_wind()['speed']) + "km/h. "
+def wind(w_data):
+    try:
+        s = " aus Richtung " + getDirection(w_data['wind']['deg'])
+    except KeyError:
+        s = ""
+    return "Der Wind weht" + s + " mit einer Geschwindigkeit von " + str(w_data['wind']['speed']) + " m/s. "
 
 def getDirection(deg):
   direction = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
@@ -39,25 +46,70 @@ def getDirection(deg):
       return ""
   return direction[math.floor(deg/45)];
 
-def humidity(w):
-    return str(w.get_humidity()) + "%% Luftfeuchtigkeit. "
-
 def weather(w,forecast,time):
-    return sunny(forecast,time)+rainy(forecast,time)+temperature(w)+wind(w)+humidity(w)
+    weather_data = {}
+    # int: GMT UNIX time of weather measurement
+    weather_data['reference'] = w.get_reference_time()
+    # int: GMT UNIX time of sunrise
+    weather_data['sunrise'] = w.get_sunrise_time()
+    # int: GMT UNIX time of sunset
+    weather_data['sunset'] = w.get_sunset_time()
+    # pyowm.utils.timeformatutils.to_ISO8601() converts to readable date time format
+    # int: cloud coverage percentage
+    weather_data['clouds'] = w.get_clouds()
+    # dict: precipitation info
+    weather_data['rain'] = w.get_rain()
+    # dict: snow info
+    weather_data['snow'] = w.get_snow()
+    # dict: wind info 'deg', 'speed'
+    weather_data['wind'] = w.get_wind()
+    # int: atmospheric humidity percentage
+    weather_data['humidity'] = w.get_humidity()
+    # int: atmospheric pressure info
+    weather_data['pressure'] = w.get_pressure()
+    # dict: temperature info 'temp', 'temp_min', 'temp_max'
+    weather_data['temperature'] = w.get_temperature('celsius')
+    # Unicode: short weather status
+    weather_data['status'] = w.get_status()
+    # Unicode: detailed weather status
+    weather_data['detailed_status'] = w.get_detailed_status()
+    # int: OWM weather condiction code
+    weather_data['code'] = w.get_weather_code()
+    # Unicode: weather-related icon name
+    weather_data['icon'] = w.get_weather_icon_name()
+    # float: visibility distance
+    # weather_data['vis_distance'] = w.get_visibility_distance()
+    # float: dewpoint
+    # weather_data['dewpoint'] = w.get_dewpoint()
+    # float: Canadian humidex
+    # weather_data['humidex'] = w.get_humidex()
+    # float: heat index
+    # weather_data['heat_index'] = w.get_heat_index()
+    # boolean
+    weather_data['cloudy'] = forecast.will_be_cloudy_at(time)
+    weather_data['foggy'] = forecast.will_be_foggy_at(time)
+    weather_data['hurricane'] = forecast.will_be_hurricane_at(time)
+    weather_data['rainy'] = forecast.will_be_rainy_at(time)
+    weather_data['snowy'] = forecast.will_be_snowy_at(time)
+    weather_data['stormy'] = forecast.will_be_stormy_at(time)
+    weather_data['sunny'] = forecast.will_be_sunny_at(time)
+    return weather_data
 
 def locate():
     r = requests.get('http://ipinfo.io/city')
     return r.text
 
 def deliver(t='aktuell', p=locate(), q='wetter'):
-    observation = owm.weather_at_place(p)
     forecast = owm.daily_forecast(p)
+    observation = owm.weather_at_place(p)
     w = observation.get_weather()
     if t.lower() == 'morgen':
         when = pyowm.timeutils.now()
     else:
         when = pyowm.timeutils.tomorrow()
+    data = weather(w,forecast,when)
+    # Nur Wetter oder Temperatur
     if q.lower() == 'temperatur':
-        return p + ": " + temperature(w)
+        return temperature(data)
     else:
-        return p + ": " + weather(w,forecast,when)
+        return temperature(data) + humidity(data) + wind(data) + rainy(data) + sunny(data)
