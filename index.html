@@ -36,29 +36,28 @@ Beispiele für Fragen sind: </p>
 <ul>
 <li>Regnet es?</li>
 <li>Wie warm ist es in Berlin?</li>
-<li>Wie kalt ist es in Moskau?</li>
-<li>Ist es sonnig?</li>
-<li>Brauche ich eine Jacke?</li>
+<li>Wie ist das Wetter am Dienstag?</li>
+<li>Ist es morgen Nachmittag sonnig?</li>
 </ul>
 
 <p>Das Projekt sollte kleine Tippfehler behandeln können und bei sonstigen Fehlern eine entsprechende Fehlermeldung schicken.
-Einfache Negation in der Frage sollte beachtet werden und Aussagesätze zum Wetter statt Fragen sollten mit True/False beantwortet werden können bzw. “Das ist richtig.”, “Nein, das stimmt so nicht.”</p>
+User-Abfragen, die nichts mit dem Wetter zu tun haben, sollten auch behandelt werden können.</p>
 
 <h2>
-<a id="python-module-und-apis" class="anchor" href="#python-module-und-apis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python-Module und APIs</h2>
+<a id="python-module-und-apis" class="anchor" href="#python-module-und-apis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Module und APIs</h2>
 
 <h5>
 <a id="ntlk" class="anchor" href="#ntlk" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NTLK</h5>
 
 <p>Im Kurs wurde viel mit dem Natural Language Toolkit (<a href="http://www.nltk.org/">http://www.nltk.org/</a>) gearbeitet. Deshalb wird es auch für dieses Projekt verwendet.
-Das Python-Modul kann man ganz einfach mit diesem Befehl installieren: <br>
+Das Python-Modul kann man ganz einfach mit diesem Befehl installieren:<br> 
 <code>python3 -m pip install nltk</code></p>
 
 <h5>
-<a id="openweatherapi-pyowm-ip-geolocation-api-requests" class="anchor" href="#openweatherapi-pyowm-ip-geolocation-api-requests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>OpenWeatherAPI, pyowm, IP Geolocation API, requests</h5>
+<a id="openweatherapi-pyowm-ipinfo-requests" class="anchor" href="#openweatherapi-pyowm-ipinfo-requests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>OpenWeatherAPI, pyowm, ipinfo, requests</h5>
 
 <p>Für das Projekt wird die OpenWeatherMAP API benutzt. Für einen API Key muss man sich dort registrieren. Es gibt einen kostenlosen Plan. 
-Als Hilfsmittel wird das Python Modul “pyowm” verwendet.<br>
+Als Hilfsmittel wird das Python-Modul “pyowm” verwendet.<br>
 <a href="https://pyowm.readthedocs.io/en/latest/">https://pyowm.readthedocs.io/en/latest/</a> <br>
 Konkret interessant werden wohl diese Teile der Dokumentation sein: <br>
 <a href="https://pyowm.readthedocs.io/en/latest/pyowm.webapi25.html#module-pyowm.webapi25.observation">https://pyowm.readthedocs.io/en/latest/pyowm.webapi25.html#module-pyowm.webapi25.observation</a> <br>
@@ -80,7 +79,8 @@ print(w.get_temperature('celsius')['temp'])
 
 <p>Das Ding gibt die momentane Temperatur in Berlin aus. Das Skript owmtest.py ist noch ein wenig ausführlicher und zeigt weitere Funktionalitäten von pyowm.</p>
 
-<p>Falls der User keinen Ort angibt, lässt sich mittels der IP Geolocation API der Ort des Users anhand seiner IP Adresse bestimmen: <a href="http://ipinfo.io/developers">http://ipinfo.io/developers</a> <br>
+<p>Falls der User keinen Ort angibt, lässt sich mittels der IP Geolocation API der Ort des Users anhand seiner IP Adresse bestimmen. <br>
+<a href="http://ipinfo.io/developers">http://ipinfo.io/developers</a> <br>
 Dazu benötigt man das Python-Modul "requests": <br> 
 <code>python3 -m pip install requests</code></p>
 
@@ -94,9 +94,7 @@ print(r.text)
 <h5>
 <a id="telegram-bot-api" class="anchor" href="#telegram-bot-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Telegram Bot API</h5>
 
-<p>Idealerweise hätte das Projekt eine GUI mit Antworten, die mit graphischen Elemente (Symbole für Regen, Sonne usw.) geschmückt werden.
-Eine andere Möglichkeit wäre, das Ganze in Form eines Bots auf Telegram oder auf Facebook Messenger zu implementieren.
-Ich würde die Telegram API bevorzugen, da man sich auf Facebook Messenger als Facebook Developer registrieren muss.
+<p>Das Ziel ist, das Projekt in Form eines Telegram Bots zu realisieren.
 Die Telegram Bot API: <a href="https://core.telegram.org/bots">https://core.telegram.org/bots</a></p>
 
 <p>Mockup als Telegram-Bot
@@ -144,12 +142,6 @@ Das Python Skript weather.py übernimmt da die ganze Arbeit. Alle weiteren Wette
 <li>Art der Wetterabfrage erkennen</li>
 <li>Rechtschreibfehler erkennen, behandeln (ideal: “Meintest du vielleicht?”)</li>
 <li>ungültigen Input behandeln</li>
-</ul>
-
-<p>Ein weiteres Problem ist die Anbindung an die Telegram Bot API, weil ich noch keine Erfahrung damit habe.</p>
-
-<ul>
-<li>Output im Bot (wetterbot.py)</li>
 </ul>
 
       <footer class="site-footer">
