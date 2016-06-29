@@ -9,12 +9,11 @@ Das Projekt soll Wetterabfragen in natürlicher Sprache bearbeiten und adäquate
 Beispiele für Fragen sind: 
 - Regnet es?
 - Wie warm ist es in Berlin?
-- Wie kalt ist es in Moskau?
-- Ist es sonnig?
-- Brauche ich eine Jacke?
+- Wie ist das Wetter am Dienstag?
+- Ist es morgen Nachmittag sonnig?
 
 Das Projekt sollte kleine Tippfehler behandeln können und bei sonstigen Fehlern eine entsprechende Fehlermeldung schicken.
-Einfache Negation in der Frage sollte beachtet werden und Aussagesätze zum Wetter statt Fragen sollten mit True/False beantwortet werden können bzw. “Das ist richtig.”, “Nein, das stimmt so nicht.”
+User-Abfragen, die nichts mit dem Wetter zu tun haben, sollten auch behandelt werden können.
 
 ## Python Module und APIs
 ##### NTLK
@@ -58,9 +57,7 @@ print(r.text)
 ~~~~
 
 ##### Telegram Bot API
-Idealerweise hätte das Projekt eine GUI mit Antworten, die mit graphischen Elemente (Symbole für Regen, Sonne usw.) geschmückt werden.
-Eine andere Möglichkeit wäre, das Ganze in Form eines Bots auf Telegram oder auf Facebook Messenger zu implementieren.
-Ich würde die Telegram API bevorzugen, da man sich auf Facebook Messenger als Facebook Developer registrieren muss.
+Das Ziel ist, das Projekt in Form eines Telegram Bots zu realisieren.
 Die Telegram Bot API: https://core.telegram.org/bots
 
 Mockup als Telegram-Bot
@@ -92,6 +89,3 @@ Das Schwierigste ist tatsächlich die Verarbeitung des Inputs (extractor.py).
 - Art der Wetterabfrage erkennen
 - Rechtschreibfehler erkennen, behandeln (ideal: “Meintest du vielleicht?”)
 - ungültigen Input behandeln
-
-Ein weiteres Problem ist die Anbindung an die Telegram Bot API, weil ich noch keine Erfahrung damit habe.
-- Output im Bot (wetterbot.py)
