@@ -1,0 +1,47 @@
+Beispielqueries:
+Wie ist das Wetter am Dienstag?
+Wie warm ist heute?
+Wie ist das Wetter in Berlin?
+Wetter am Dienstag
+Wetter heute
+Wie ist das Wetter in zwei Stunden?
+Brauche ich einen Regenschirm?
+Regnet es?
+Scheint die Sonne?
+Wie ist die Temperatur heute Abend?
+
+Fehlerquellen: Rechtschreibfehler, Kein Zusammenhang mit Wetter
+
+Zuordnung von Keywords auf Funktionen, bestimmte Werte
+Zahlen:
+['ein, eins, eine, einer, einen': 1, 'zwei': 2, usw.]
+Zeit: Default momentan
+['heute', 'morgen', 'aktuell', 'in x stunde(n)', 'abend', 'morgen', 'mittag', 'nacht', 'woche', 'in x tag(en)', 'Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag']
+Ort: Default Geolocation
+['in x', 'auf x', 'Stadt']
+Query: Default Wetter
+['wetter', 'temperatur', 'regnen, regnet, regenschirm', 'sonne', 'wind', 'luftfeuchtigkeit', 'sonnenaufgang', 'sonnenuntergang']
+Denkbar wär falsch geschriebene Varianten miteinzubauen, um kleine Rechtschreibfehler behandeln zu können
+
+
+Verarbeitung von Input:
+ganz dumm Bruteforce durchscannen nach Match von Zahlen, Zeit, Ort, Query
+
+Part of Speech Tagging:
+Filtern von Input --> leichtere Verarbeitung?
+
+Hotwords:
+'in' für Ort bzw. Zeit
+
+Oder Phrasenstrukturgrammatik:
+Fragewort (Wie, Was, Wann)
+S -> NP VP
+PP -> P NP
+NP -> Det N | Det N PP |
+VP -> V NP | VP PP
+Det -> 'einen' | 'das' | 'die' | 'der' | 'einer' | 'zwei', 'drei' usw.
+N  -> 'Wetter', 'Temperatur', 'Regen', 'Regenschirm', 'Sonne', 'Wind', 'Stunde', 'Berlin' usw.
+V  -> 'regnen', 'werden', 'brauchen', 'sein'
+P  -> 'in', 'an'
+
+am, zum usw. auftrennen in 'an dem'

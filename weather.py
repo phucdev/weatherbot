@@ -1,10 +1,10 @@
 #! /usr/bin/env python
 
-# Autor: Phuc Tran Truong
-# Datum: 25.06.2016
-# Stellt die Wetterdaten als String bereit
+# Author: Phuc Tran Truong
+# Date: 03.07.2016
+# Delivers weather data as a string
 
-# Ort, Zeit und Wetter/Temperatur sollen an dieses Modul übergeben werden
+# arguments: place, time and type of query
 
 from nltk.tokenize import word_tokenize
 import math
@@ -103,13 +103,10 @@ def deliver(t='aktuell', p=locate(), q='wetter'):
     forecast = owm.daily_forecast(p)
     observation = owm.weather_at_place(p)
     w = observation.get_weather()
-    if t.lower() == 'morgen':
-        when = pyowm.timeutils.now()
-    else:
-        when = pyowm.timeutils.tomorrow()
-    data = weather(w,forecast,when)
-    # Nur Wetter oder Temperatur
+    data = weather(w,forecast,t)
+    # either temperature or weather
+    # add additional functionality please
     if q.lower() == 'temperatur':
         return temperature(data)
     else:
-        return temperature(data) + humidity(data) + wind(data) + rainy(data) + sunny(data)
+        return forecast.get_forecast().get_location().get_name() + ', ' + forecast.get_forecast().get_location().get_country() + ': ' + temperature(data) + humidity(data) + wind(data) + rainy(data) + sunny(data)
