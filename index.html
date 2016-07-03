@@ -37,14 +37,13 @@ Beispiele für Fragen sind: </p>
 <li>Regnet es?</li>
 <li>Wie warm ist es in Berlin?</li>
 <li>Wie ist das Wetter am Dienstag?</li>
-<li>Ist es morgen Nachmittag sonnig?</li>
+<li>Ist es morgen sonnig?</li>
 </ul>
 
-<p>Das Projekt sollte kleine Tippfehler behandeln können und bei sonstigen Fehlern eine entsprechende Fehlermeldung schicken.
-User-Abfragen, die nichts mit dem Wetter zu tun haben, sollten auch behandelt werden können.</p>
+<p>User-Abfragen, die nichts mit dem Wetter zu tun haben, sollten auch behandelt werden können.</p>
 
 <h2>
-<a id="python-module-und-apis" class="anchor" href="#python-module-und-apis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Module und APIs</h2>
+<a id="python-module-apis-und-andere-hilfsmittel" class="anchor" href="#python-module-apis-und-andere-hilfsmittel" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Python Module, APIs und andere Hilfsmittel</h2>
 
 <h5>
 <a id="ntlk" class="anchor" href="#ntlk" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NTLK</h5>
@@ -57,11 +56,20 @@ Das Python-Modul kann man ganz einfach mit diesem Befehl installieren:<br>
 <a id="openweatherapi-pyowm-ipinfo-requests" class="anchor" href="#openweatherapi-pyowm-ipinfo-requests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>OpenWeatherAPI, pyowm, ipinfo, requests</h5>
 
 <p>Für das Projekt wird die OpenWeatherMAP API benutzt. Für einen API Key muss man sich dort registrieren. Es gibt einen kostenlosen Plan. 
-Als Hilfsmittel wird das Python-Modul “pyowm” verwendet.<br>
+Als Hilfsmittel wird das Python-Modul “pyowm” verwendet.</p>
+
+<ul>
+<li>
 <a href="https://pyowm.readthedocs.io/en/latest/">https://pyowm.readthedocs.io/en/latest/</a> <br>
-Konkret interessant werden wohl diese Teile der Dokumentation sein: <br>
-<a href="https://pyowm.readthedocs.io/en/latest/pyowm.webapi25.html#module-pyowm.webapi25.observation">https://pyowm.readthedocs.io/en/latest/pyowm.webapi25.html#module-pyowm.webapi25.observation</a> <br>
-<a href="https://pyowm.readthedocs.io/en/latest/pyowm.utils.html">https://pyowm.readthedocs.io/en/latest/pyowm.utils.html</a> <br></p>
+</li>
+</ul>
+
+<p>Konkret interessant werden wohl diese Teile der Dokumentation sein:</p>
+
+<ul>
+<li><a href="https://pyowm.readthedocs.io/en/latest/pyowm.webapi25.html#module-pyowm.webapi25.observation">https://pyowm.readthedocs.io/en/latest/pyowm.webapi25.html#module-pyowm.webapi25.observation</a></li>
+<li><a href="https://pyowm.readthedocs.io/en/latest/pyowm.utils.html">https://pyowm.readthedocs.io/en/latest/pyowm.utils.html</a></li>
+</ul>
 
 <p>Das Python-Modul kann man ganz einfach mit diesem Befehl installieren: <br>
 <code>python3 -m pip install pyowm</code></p>
@@ -79,9 +87,14 @@ print(w.get_temperature('celsius')['temp'])
 
 <p>Das Ding gibt die momentane Temperatur in Berlin aus. Das Skript owmtest.py ist noch ein wenig ausführlicher und zeigt weitere Funktionalitäten von pyowm.</p>
 
-<p>Falls der User keinen Ort angibt, lässt sich mittels der IP Geolocation API der Ort des Users anhand seiner IP Adresse bestimmen. <br>
-<a href="http://ipinfo.io/developers">http://ipinfo.io/developers</a> <br>
-Dazu benötigt man das Python-Modul "requests": <br> 
+<p>Falls der User keinen Ort angibt, lässt sich mittels der IP Geolocation API der Ort des Users anhand seiner IP Adresse bestimmen.</p>
+
+<ul>
+<li>
+<a href="http://ipinfo.io/developers">http://ipinfo.io/developers</a> </li>
+</ul>
+
+<p>Dazu benötigt man das Python-Modul "requests": <br> 
 <code>python3 -m pip install requests</code></p>
 
 <p>Das hier gibt die Stadt aus.</p>
@@ -99,6 +112,24 @@ Die Telegram Bot API: <a href="https://core.telegram.org/bots">https://core.tele
 
 <p>Mockup als Telegram-Bot
 <img src="https://raw.githubusercontent.com/phucdev/weatherbot/master/iOS%20Mockup.png" alt="Wetterbot Mockup"></p>
+
+<h4>
+<a id="stanfordnertagger" class="anchor" href="#stanfordnertagger" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>StanfordNERTagger</h4>
+
+<p>Um den Ort aus dem User-Input zu identifizieren, wird der StanfordNERTagger (Named Entity Recognizer) verwendet.</p>
+
+<ul>
+<li><a href="http://nlp.stanford.edu/software/CRF-NER.shtml">http://nlp.stanford.edu/software/CRF-NER.shtml</a></li>
+<li><a href="http://www.nltk.org/api/nltk.tag.html#module-nltk.tag.stanford">http://www.nltk.org/api/nltk.tag.html#module-nltk.tag.stanford</a></li>
+</ul>
+
+<p>Orte werden mit 'LOCATION' getaggt. 
+Momentan gibt es folgende Probleme: </p>
+
+<ul>
+<li>Man muss sich den StanfordNERTagger installieren und sich die Models (zum Training) herunterladen. Der StanfordNERTagger funktioniert deshalb nur lokal auf dem (bzw. meinem) Computer.</li>
+<li>Da ich noch nicht herausbekommen habe, wie man den StanfordNERTagger auf deutschen Input umstellt, verwende ich ein englisches Model. Damit kann der StanfordNERTagger aber auch die Orte identifizieren.</li>
+</ul>
 
 <h2>
 <a id="struktur-des-projekts-und-zentrale-probleme" class="anchor" href="#struktur-des-projekts-und-zentrale-probleme" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Struktur des Projekts und zentrale Probleme</h2>
@@ -140,7 +171,6 @@ Das Python Skript weather.py übernimmt da die ganze Arbeit. Alle weiteren Wette
 <li>Ort erkennen</li>
 <li>Zeit erkennen</li>
 <li>Art der Wetterabfrage erkennen</li>
-<li>Rechtschreibfehler erkennen, behandeln (ideal: “Meintest du vielleicht?”)</li>
 <li>ungültigen Input behandeln</li>
 </ul>
 
