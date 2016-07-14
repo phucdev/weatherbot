@@ -1,6 +1,6 @@
 import pyowm
 
-owm = pyowm.OWM('0ce70d38fc4aaade9c6f004e226e8a61')  # You MUST provide a valid API key
+owm = pyowm.OWM(API_key='0ce70d38fc4aaade9c6f004e226e8a61', language='de')  # You MUST provide a valid API key
 
 
 # Will it be sunny tomorrow at this time in Berlin (Germany) ?
