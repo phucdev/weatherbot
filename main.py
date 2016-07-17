@@ -132,11 +132,9 @@ def main():
         entry_points=[CommandHandler('start', start)],
 
         states={
-            START: [RegexHandler('^(Boy|Girl|Other)$', gender)],
+            NEXT_QUEST: [MessageHandler([Filters.text], next_question)],
 
             REPLY: [MessageHandler([Filters.text], reply)],
-
-            NEXT_QUEST: [MessageHandler([Filters.text], reply)],
 
             LOC_UNKNOWN: [MessageHandler([Filters.photo], photo),
                     CommandHandler('skip', skip_photo)],
