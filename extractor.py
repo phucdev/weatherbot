@@ -96,7 +96,7 @@ def get_query(query):
     for e in query:
         if e in query_ex.keys():
             return query_ex[e]
-    return 'nonsense'
+    return None
 
 def unknown_reply(args):
     reply = ""

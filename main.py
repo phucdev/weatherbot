@@ -20,6 +20,7 @@ import weather
 import extractor
 import time
 
+# Alternative mit Reply Keyboard
 from telegram import (ReplyKeyboardMarkup)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
                           ConversationHandler)
@@ -38,12 +39,23 @@ TOKEN = "219296013:AAHENQyYMoWHSGs5bjPhhxHR2ai4uEHGQ7c" # token for telegram bot
 
 
 def start(bot, update):
-
     bot.sendMessage(update.message.chat_id,
                     text='Hi! Ich bin dein Wetterbot 😍 Was willst du wissen?  '
-                         'Antworte /cancel um mich zu stoppen 😉\n\n')
+                         'Antworte /cancel um mich zu stoppen 😉\n\n',)
 
     return REPLY
+
+# Alternative mit Reply Keyboard
+"""
+def start(bot, update):
+    reply_keyboard = [['Wetter jetzt in Berlin', 'Temperatur jetzt in Berlin', '/cancel']]
+    bot.sendMessage(update.message.chat_id,
+                    text='Hi! Ich bin dein Wetterbot 😍 Was willst du wissen?  '
+                         'Antworte /cancel um mich zu stoppen 😉\n\n',
+                    reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+
+    return REPLY
+"""
 
 def reply(bot, update):
     extr_request = extractor.get_args(update.message.text)
@@ -75,7 +87,7 @@ def cancel(bot, update):
     user = update.message.from_user
     logger.info("User %s canceled the conversation." % user.first_name)
     bot.sendMessage(update.message.chat_id,
-                    text='Bye! I hope we can talk again some day.')
+                    text='Ok bis bald!')
 
     return ConversationHandler.END
 

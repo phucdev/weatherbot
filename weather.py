@@ -47,43 +47,43 @@ def getDirection(deg):
 # boolean section
 def rainy(w_data):
     if w_data['rainy']:
-        return "Es regnet. "
+        return "Es regnet 🌧 "
     else:
         return "Es regnet nicht. "
 
 def sunny(w_data):
     if w_data['sunny']:
-        return "Es ist sonnig. "
+        return "Es ist sonnig 🌞 "
     else:
         return "Es ist nicht sonnig. "
 
 def cloudy(w_data):
     if w_data['cloudy']:
-        return "Es ist bewölkt. "
+        return "Es ist bewölkt 🌥 "
     else:
         return "Es ist nicht bewölkt. "
 
 def foggy(w_data):
     if w_data['foggy']:
-        return "Es ist neblig. "
+        return "Es ist neblig 🌫. "
     else:
         return "Es ist nicht neblig. "
 
 def hurricane(w_data):
     if w_data['hurricane']:
-        return "Es gibt einen Hurricane. "
+        return "Es gibt einen Hurricane 🌪. "
     else:
         return "Es gibt keinen Hurricane. "
 
 def snowy(w_data):
     if w_data['snowy']:
-        return "Es schneit. "
+        return "Es schneit 🌨. "
     else:
         return "Es schneit nicht. "
 
 def stormy(w_data):
     if w_data['stormy']:
-        return "Es ist stürmisch. "
+        return "Es ist stürmisch 🌬. "
     else:
         return "Es ist nicht stürmisch. "
 
