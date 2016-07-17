@@ -13,12 +13,12 @@ What it is supposed to do:
 import nltk
 from nltk.tag import StanfordNERTagger  # Named Entity Recognizer
 from nltk.tokenize import word_tokenize # chopping up the user input
-import datetime
+import datetime # Montag = 0, Sonntag = 6
 import requests
 
 # calculates the datetime object for the weekday
 def get_weekday(x):
-    now = datetime.datetime.today()
+    now = datetime.date.today()
     weekday = now.weekday()
     i = 0
     while x != (weekday + i) % 7:
@@ -29,16 +29,32 @@ def get_weekday(x):
 date_ex = {'montag': get_weekday(0), 'dienstag': get_weekday(1), 'mittwoch': get_weekday(2), 'donnerstag': get_weekday(3), 'freitag': get_weekday(4), 'samstag': get_weekday(5), 'sonntag': get_weekday(6), 'heute': datetime.datetime.today(), 'morgen': datetime.datetime.today()+datetime.timedelta(days=1), 'übermorgen': datetime.datetime.today()+datetime.timedelta(days=2)}
 
 # time expressions
+time_ex = {'früh': datetime.time(8, 0, 0, 0), 'morgen': datetime.time(8, 0, 0, 0), 'mittag': datetime.time(12, 0, 0, 0), 'abend': datetime.time(18, 0, 0, 0), 'nacht': datetime.time(23, 0, 0, 0)}
+# '18:30 Uhr' ?
 
 # Types of queries
 query_ex = {'wetter': "weather", 'regen': "rain", 'wind': "wind", 'windig': "wind", 'temperatur': "temperature", 'regnen': "rainy", 'regnet': "rainy", 'regenschirm': "rainy", 'sonne': "sunny", 'sonnig': "sunny", 'luftfeuchtigkeit': "humidity", 'sonnenaufgang': "sunrise", 'sonnenuntergang': "sunset", 'warm': "temperature", 'kalt': "temperature", 'bewölkt': "cloudy", 'wolke': "cloudy", 'nebel': "foggy", 'benebelt': "foggy", 'hurricane': "hurricane", 'schnee': "snowy", 'schneit': "snowy", 'schneien': "snowy", 'sturm': "stormy", 'stürmisch': "stormy", 'unwetter': "stormy", 'schön': "weather", 'schlecht': "weather", 'grillen': "bbq", 'segeln': "sailing", 'fahrrad': "bike", 'fahrradfahren': "bike", 'schwimmen': "swim", 'surfen': "surfing", 'jacke': "temperature"}
 
 # takes the user input and checks for date/time expressions from date_ex
 def get_time(time):
-    for e in time:
-        if e in date_ex.keys():
-            return date_ex[e]
-    return datetime.datetime.today()
+    # default
+    the_date = datetime.date.today()
+    # check for date expression
+    for d in time:
+        if d in date_ex.keys():
+            the_date = date_ex[d]
+    # default
+    the_time = datetime.datetime.now().time()
+    # check for specific time is specified, only the hour, fails otherwise
+    try:
+        the_time = datetime.time(int(time[time.index("uhr")-1]), 0, 0, 0)
+    except (TypeError, ValueError) as e:
+        # check for time expression
+        print("Error")
+        for t in time:
+            if t in time_ex.keys():
+                the_time = time_ex[t]
+    return datetime.datetime.combine(the_date, the_time)
 
 # locate User for default location/if the location is not specified
 def locate():
