@@ -87,7 +87,6 @@ def main():
         entry_points=[CommandHandler('start', start)],
 
         states={
-            NEXT_QUEST: [MessageHandler([Filters.text], next_question)],
 
             REPLY: [MessageHandler([Filters.text], reply)],
 
