@@ -18,6 +18,7 @@ bot.
 """
 import weather
 import extractor
+import time
 
 from telegram import (ReplyKeyboardMarkup)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
@@ -48,55 +49,9 @@ def reply(bot, update):
     extr_request = extractor.get_args(update.message.text)
     bot.sendMessage(update.message.chat_id,text="Ich schaue mal nach 😊")
     bot.sendMessage(update.message.chat_id,text=weather.deliver(*extr_request))
-    return NEXT_QUEST
-
-
-def next_question(bot, update):
-    bot.sendMessage(update.message.chat_id,
-                    text='Kann ich dir sonst noch helfen? 🙄')
-
+    time.sleep(3)
+    bot.sendMessage(update.message.chat_id, text='Kann ich dir sonst noch helfen? 🙄')
     return REPLY
-
-
-def photo(bot, update):
-    user = update.message.from_user
-    photo_file = bot.getFile(update.message.photo[-1].file_id)
-    photo_file.download('user_photo.jpg')
-    logger.info("Photo of %s: %s" % (user.first_name, 'user_photo.jpg'))
-    bot.sendMessage(update.message.chat_id, text='Gorgeous! Now, send me your location please, '
-                                                 'or send /skip if you don\'t want to.')
-
-    return LOCATION
-
-
-def skip_photo(bot, update):
-    user = update.message.from_user
-    logger.info("User %s did not send a photo." % user.first_name)
-    bot.sendMessage(update.message.chat_id, text='I bet you look great! Now, send me your '
-                                                 'location please, or send /skip.')
-
-    return LOCATION
-
-
-def location(bot, update):
-    user = update.message.from_user
-    user_location = update.message.location
-    logger.info("Location of %s: %f / %f"
-                % (user.first_name, user_location.latitude, user_location.longitude))
-    bot.sendMessage(update.message.chat_id, text='Maybe I can visit you sometime! '
-                                                 'At last, tell me something about yourself.')
-
-    return BIO
-
-
-def skip_location(bot, update):
-    user = update.message.from_user
-    logger.info("User %s did not send a location." % user.first_name)
-    bot.sendMessage(update.message.chat_id, text='You seem a bit paranoid! '
-                                                 'At last, tell me something about yourself.')
-
-    return BIO
-
 
 def bio(bot, update):
     user = update.message.from_user
