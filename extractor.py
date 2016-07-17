@@ -88,7 +88,7 @@ def get_location(loc):
                 location += ' ' + loc_tuples[i]
     except IndexError:
         # if no location is specified
-        location = locate()
+        return None
     return location
 
 # takes the user input and checks for query expressions from query_ex
@@ -97,6 +97,18 @@ def get_query(query):
         if e in query_ex.keys():
             return query_ex[e]
     return 'nonsense'
+
+def unknown_reply(args):
+    reply = ""
+    if(not args[0]):
+        reply += "Deine Abfrage habe ich nicht verstanden. Schicke sie bitte an meine Schöpfer auf https://github.com/phucdev/weatherbot"
+        return 1,reply
+    if(not args[1]):
+        reply += "Ich nehme an, dass du den aktuellen Zeitpunkt meinst.\n"
+    if(not args[2]):
+        reply += "Ich habe den Ort nicht verstanden, welchen Ort meinst du? 😓\n"
+        return 2,reply
+    return 3, reply
 
 # extracts arguments from the input
 def get_args(request):

@@ -47,7 +47,16 @@ def start(bot, update):
 
 def reply(bot, update):
     extr_request = extractor.get_args(update.message.text)
-    bot.sendMessage(update.message.chat_id,text="Ich schaue mal nach 😊")
+    code, reply = extractor.unknown_reply(extr_request)
+    if (code == 0):
+        bot.sendMessage(update.message.chat_id,text=reply)
+        return REPLY
+    elif (code == 2):
+        bot.sendMessage(update.message.chat_id,text=reply)
+        return LOC_UNKNOWN
+
+    bot.sendMessage(update.message.chat_id,text="Ich schaue mal nach 😊" + reply)
+
     bot.sendMessage(update.message.chat_id,text=weather.deliver(*extr_request))
     time.sleep(3)
     bot.sendMessage(update.message.chat_id, text='Kann ich dir sonst noch helfen? 🙄')
