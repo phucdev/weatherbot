@@ -16,6 +16,8 @@ Send /start to initiate the conversation.
 Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
+import weather
+import extractor
 
 from telegram import (ReplyKeyboardMarkup)
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
@@ -29,19 +31,23 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-START, LOC_UNKNOWN, TIME_UNKNOWN, LOC_INCORRECT = range(4)
+START, REPLY, LOC_UNKNOWN, TIME_UNKNOWN, LOC_TIME_UNKNOWN = range(5)
+
+TOKEN = "219296013:AAHENQyYMoWHSGs5bjPhhxHR2ai4uEHGQ7c" # token for telegram bot
 
 
 def start(bot, update):
-    reply_keyboard = [['Boy', 'Girl', 'Other']]
 
     bot.sendMessage(update.message.chat_id,
-                    text='Hi! My name is Professor Bot. I will hold a conversation with you. '
-                         'Send /cancel to stop talking to me.\n\n'
-                         'Are you a boy or a girl?',
-                    reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
+                    text='Hi! Ich bin dein Wetterbot 😍 Was willst du wissen?  '
+                         'Antworte /cancel um mich zu stoppen 😉\n\n')
 
-    return GENDER
+    return REPLY
+
+def reply(bot, update):
+    extr_request = extractor.get_args(request)
+    bot.sendMessage(update.message.chat_id,text=weather.deliver(*extr_request))
+    return START
 
 
 def gender(bot, update):
@@ -118,7 +124,7 @@ def error(bot, update, error):
 
 def main():
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater("219296013:AAHENQyYMoWHSGs5bjPhhxHR2ai4uEHGQ7c")
+    updater = Updater(TOKEN)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -130,6 +136,8 @@ def main():
         states={
             START: [RegexHandler('^(Boy|Girl|Other)$', gender)],
 
+            REPLY: [MessageHandler([Filters.text], reply)],
+
             LOC_UNKNOWN: [MessageHandler([Filters.photo], photo),
                     CommandHandler('skip', skip_photo)],
 
@@ -137,6 +145,7 @@ def main():
                        CommandHandler('skip', skip_location)],
 
             LOC_TIME_UNKNOWN: [MessageHandler([Filters.text], bio)]
+
         },
 
         fallbacks=[CommandHandler('cancel', cancel)]
