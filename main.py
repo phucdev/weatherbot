@@ -31,7 +31,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-START, REPLY, LOC_UNKNOWN, TIME_UNKNOWN, LOC_TIME_UNKNOWN = range(5)
+START, REPLY, NEXT_QUEST, LOC_UNKNOWN, TIME_UNKNOWN, LOC_TIME_UNKNOWN = range(6)
 
 TOKEN = "219296013:AAHENQyYMoWHSGs5bjPhhxHR2ai4uEHGQ7c" # token for telegram bot
 
@@ -45,19 +45,17 @@ def start(bot, update):
     return REPLY
 
 def reply(bot, update):
-    extr_request = extractor.get_args(request)
+    extr_request = extractor.get_args(update.message.text)
+    bot.sendMessage(update.message.chat_id,text="Ich schaue mal nach 😊")
     bot.sendMessage(update.message.chat_id,text=weather.deliver(*extr_request))
     return START
 
 
-def gender(bot, update):
-    user = update.message.from_user
-    logger.info("Gender of %s: %s" % (user.first_name, update.message.text))
+def next_question(bot, update):
     bot.sendMessage(update.message.chat_id,
-                    text='I see! Please send me a photo of yourself, '
-                         'so I know what you look like, or send /skip if you don\'t want to.')
+                    text='Kann ich dir sonst noch helfen? 🙄')
 
-    return PHOTO
+    return REPLY
 
 
 def photo(bot, update):
@@ -137,6 +135,8 @@ def main():
             START: [RegexHandler('^(Boy|Girl|Other)$', gender)],
 
             REPLY: [MessageHandler([Filters.text], reply)],
+
+            NEXT_QUEST: [MessageHandler([Filters.text], reply)],
 
             LOC_UNKNOWN: [MessageHandler([Filters.photo], photo),
                     CommandHandler('skip', skip_photo)],
