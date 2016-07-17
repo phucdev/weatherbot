@@ -82,21 +82,13 @@ def main():
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
-    # Add conversation handler with the states GENDER, PHOTO, LOCATION and BIO
+    # Add conversation handler
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
 
         states={
 
             REPLY: [MessageHandler([Filters.text], reply)],
-
-            LOC_UNKNOWN: [MessageHandler([Filters.photo], photo),
-                    CommandHandler('skip', skip_photo)],
-
-            TIME_UNKNOWN: [MessageHandler([Filters.location], location),
-                       CommandHandler('skip', skip_location)],
-
-            LOC_TIME_UNKNOWN: [MessageHandler([Filters.text], bio)]
 
         },
 
