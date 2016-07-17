@@ -48,7 +48,7 @@ def reply(bot, update):
     extr_request = extractor.get_args(update.message.text)
     bot.sendMessage(update.message.chat_id,text="Ich schaue mal nach 😊")
     bot.sendMessage(update.message.chat_id,text=weather.deliver(*extr_request))
-    return START
+    return NEXT_QUEST
 
 
 def next_question(bot, update):
