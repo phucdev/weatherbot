@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 
 """
-Author: Phuc Tran Truong
-Date: 14.07.2016
+Author: Phuc Tran Truong, Marcus Ding
+Date: 17.07.2016
 
 What it is supposed to do:
 1. chop up the user input (tokenize)

@@ -1,6 +1,9 @@
 #! /usr/bin/env python
 
 """
+NOT USED ANYMORE
+FUNCTIONALITY HAS BEEN OUTSOURCED TO main.py
+
 Author: Phuc Tran Truong
 Date: 14.07.2016
 
