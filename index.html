@@ -20,12 +20,11 @@
 
     <section class="main-content">
       <h1>
-<a id="wetterbot" class="anchor" href="#wetterbot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Wetterbot</h1>
+<a id="the-project" class="anchor" href="#the-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The project</h1>
 
 <p>Interprets questions about the weather in natural language and (hopefully) delivers adequate information about the weather. 
 This is a group project that I'll be doing for the course "Einführung in die maschinelle Sprachverarbeitung mit Python". 
-In the initial phase it will only work with German input. 
-The rest of the readme.md will be in German.</p>
+In the initial phase it will only work with German input. </p>
 
 <h2>
 <a id="einführung" class="anchor" href="#einf%C3%BChrung" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Einführung</h2>
@@ -105,10 +104,15 @@ print(r.text)
 </code></pre>
 
 <h5>
-<a id="telegram-bot-api" class="anchor" href="#telegram-bot-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Telegram Bot API</h5>
+<a id="telegram-bot-api-python-telegram-bot" class="anchor" href="#telegram-bot-api-python-telegram-bot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Telegram Bot API, python-telegram-bot</h5>
 
 <p>Das Ziel ist, das Projekt in Form eines Telegram Bots zu realisieren.
 Die Telegram Bot API: <a href="https://core.telegram.org/bots">https://core.telegram.org/bots</a></p>
+
+<p>Dafür benutzen wir das python-telegram-bot Modul: <a href="https://github.com/python-telegram-bot/python-telegram-bot">https://github.com/python-telegram-bot/python-telegram-bot</a> <br> 
+<code>python3 -m pip install requests</code></p>
+
+<p>Der Wetterbot ist unter <a href="http://telegram.me/phucbot">http://telegram.me/phucbot</a> erreichbar.</p>
 
 <p>Mockup als Telegram-Bot
 <img src="https://raw.githubusercontent.com/phucdev/weatherbot/master/iOS%20Mockup.png" alt="Wetterbot Mockup"></p>
@@ -127,8 +131,7 @@ Die Telegram Bot API: <a href="https://core.telegram.org/bots">https://core.tele
 Momentan gibt es folgende Probleme: </p>
 
 <ul>
-<li>Man muss sich den StanfordNERTagger installieren und sich die Models (zum Training) herunterladen. Der StanfordNERTagger funktioniert deshalb nur lokal auf dem (bzw. meinem) Computer.</li>
-<li>Da ich noch nicht herausbekommen habe, wie man den StanfordNERTagger auf deutschen Input umstellt, verwende ich ein englisches Model. Damit kann der StanfordNERTagger aber auch die Orte identifizieren.</li>
+<li>Man muss sich den StanfordNERTagger installieren und sich die Models (zum Training) herunterladen. Der Weatherbot funktioniert also nur, wenn das main.py Skript auf meinem Computer ausgeführt wird.</li>
 </ul>
 
 <h2>
@@ -138,7 +141,7 @@ Momentan gibt es folgende Probleme: </p>
 <a id="struktur" class="anchor" href="#struktur" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Struktur</h3>
 
 <h5>
-<a id="wetterbotpy" class="anchor" href="#wetterbotpy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>wetterbot.py</h5>
+<a id="mainpy" class="anchor" href="#mainpy" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>main.py</h5>
 
 <p>Dieses Skript sollte die ganze Anbindung an die Telegram Bot API (Interaktion mit der API und dem User) bzw. die ganze Steuerung übernehmen.</p>
 
