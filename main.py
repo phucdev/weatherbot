@@ -6,7 +6,8 @@
 Author: Phuc Tran Truong, Marcus Ding
 Date: 17.07.2016
 
-Parts of the code taken from the Conversationbot example (see 'python-telegram-bot' module).
+Large parts of the code are taken from the Conversationbot example (see 'python-telegram-bot' module).
+https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/conversationbot.py
 
 This Bot uses the Updater class to handle the bot.
 
