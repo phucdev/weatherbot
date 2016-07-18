@@ -15,87 +15,39 @@ Beispiele für Fragen sind:
 User-Abfragen, die nichts mit dem Wetter zu tun haben, sollten auch behandelt werden können.
 
 ## Python Module, APIs und andere Hilfsmittel
-##### NTLK
-Im Kurs wurde viel mit dem Natural Language Toolkit (http://www.nltk.org/) gearbeitet. Deshalb wird es auch für dieses Projekt verwendet.
-Das Python-Modul kann man ganz einfach mit diesem Befehl installieren:<br> 
-`python3 -m pip install nltk`
+Für das Projekt wurden folgende APIs und Module benutzt:
+- OpenWeatherAPI (http://openweathermap.org/api), pyowm (https://github.com/csparpa/pyowm) für die Wetterdaten
+- ipinfo (http://ipinfo.io), requests (http://docs.python-requests.org/en/master/) für die Bestimmung des Ortes via IP-Adresse
+- NLTK (http://www.nltk.org), StanfordNERTagger (http://nlp.stanford.edu/software/CRF-NER.shtml) für die Verarbeitung des User-Inputs
+- Telegram Bot API (https://core.telegram.org/bots/api), python-telegram-bot (https://github.com/python-telegram-bot/python-telegram-bot) für die Realisierung als Telegram Bot
 
-##### OpenWeatherAPI, pyowm, ipinfo, requests
-Für das Projekt wird die OpenWeatherMAP API benutzt. Für einen API Key muss man sich dort registrieren. Es gibt einen kostenlosen Plan. 
-Als Hilfsmittel wird das Python-Modul “pyowm” verwendet.
-- https://pyowm.readthedocs.io/en/latest/ <br>
-
-Konkret interessant werden wohl diese Teile der Dokumentation sein:
-- https://pyowm.readthedocs.io/en/latest/pyowm.webapi25.html#module-pyowm.webapi25.observation
-- https://pyowm.readthedocs.io/en/latest/pyowm.utils.html
-
-Das Python-Modul kann man ganz einfach mit diesem Befehl installieren: <br>
-`python3 -m pip install pyowm`
-
-Ein Anfang wäre:
-~~~~
-import pyowm
-# API Key
-owm = pyowm.OWM('hier API einfügen')
-observation = owm.weather_at_place("Berlin,de")
-w = observation.get_weather()
-# Temperatur
-print(w.get_temperature('celsius')['temp'])
-~~~~
-Das Ding gibt die momentane Temperatur in Berlin aus. Das Skript owmtest.py ist noch ein wenig ausführlicher und zeigt weitere Funktionalitäten von pyowm.
-
-Falls der User keinen Ort angibt, lässt sich mittels der IP Geolocation API der Ort des Users anhand seiner IP Adresse bestimmen.
-- http://ipinfo.io/developers 
-
-Dazu benötigt man das Python-Modul "requests": <br> 
-`python3 -m pip install requests`
-
-Das hier gibt die Stadt aus.
-~~~~
-import requests
-r = requests.get('http://ipinfo.io/city')
-print(r.text)
-~~~~
-
-##### Telegram Bot API
-Das Ziel ist, das Projekt in Form eines Telegram Bots zu realisieren.
-Die Telegram Bot API: https://core.telegram.org/bots
+### Telegram Bot
+Den Wetterbot findet ihr unter http://telegram.me/phucbot.
 
 Mockup als Telegram-Bot
-![Wetterbot](/iOS Mockup.png?raw=true "Als Bot in Telegram")
-
-#### StanfordNERTagger
-Um den Ort aus dem User-Input zu identifizieren, wird der StanfordNERTagger (Named Entity Recognizer) verwendet.
-- http://nlp.stanford.edu/software/CRF-NER.shtml
-- http://www.nltk.org/api/nltk.tag.html#module-nltk.tag.stanford
-
-Orte werden mit 'LOCATION' getaggt. 
-Momentan gibt es folgende Probleme: 
-- Man muss sich den StanfordNERTagger installieren und sich die Models (zum Training) herunterladen. Der StanfordNERTagger funktioniert deshalb nur lokal auf dem (bzw. meinem) Computer.
-- Da ich noch nicht herausbekommen habe, wie man den StanfordNERTagger auf deutschen Input umstellt, verwende ich ein englisches Model. Damit kann der StanfordNERTagger aber auch die Orte identifizieren.
+![Wetterbot](https://raw.githubusercontent.com/phucdev/weatherbot/master/Telegram-Mockup.jpg)
 
 ## Struktur des Projekts und zentrale Probleme
 
 ### Struktur
 
-##### wetterbot.py
-Dieses Skript sollte die ganze Anbindung an die Telegram Bot API (Interaktion mit der API und dem User) bzw. die ganze Steuerung übernehmen.
+##### main.py
+Dieses Skript sollte die ganze Anbindung an die Telegram Bot API (Interaktion mit der API und dem User) bzw. die ganze Steuerung übernehmen. Das Skript muss laufen, damit der Wetterbot funktioniert. Hier haben wir uns vom Conversationbot-Beispiel (https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/conversationbot.py) inspirieren lassen.
 
 ##### extractor.py
-Dieses Skript sollte den Input verarbeiten und an weather.py schicken. Bei Fragen, wo der Ort nicht spezifiziert wird, sollte nachgefragt werden oder wenn es geht, dann sollte der Ort automatisch durch Geo-Location bestimmt werden. Diesen soll der Bot bzw. das Programm sich für darauf folgende Fragen merken.
+Dieses Skript sollte den Input verarbeiten und an weather.py schicken. Bei Fragen, wo der Ort nicht spezifiziert wird, sollte nachgefragt werden oder wenn es geht, dann sollte der Ort automatisch durch Geo-Location bestimmt werden.
 
 ##### weather.py
 Die Anbindung an die Wetter API ist nicht schwer, weil das Python Modul OWM die meiste Arbeit für uns erledigt. Also an die Wetterdaten ranzukommen ist relativ einfach.
 Das Python Skript weather.py übernimmt da die ganze Arbeit. Alle weiteren Wetter-Funktionen sollten dort reingeschrieben werden.
 
 Im Wesentlichen gibt es drei Variablen:
-- place → Ort
-- time → Zeit 
-- query → Typ von Abfrage (Wetter, Temperatur, sunny?, rainy?, random)  
+- place → Ort durch StanfordNERTagger
+- time → Zeit durch Keyword-Erkennung
+- query → Typ von Abfrage (Wetter, Temperatur, sunny?, rainy?, random)  durch Keyword-Erkennung 
 
 ### Probleme
-Das Schwierigste ist tatsächlich die Verarbeitung des Inputs (extractor.py).
-- Ort erkennen
-- Zeit erkennen
-- Art der Wetterabfrage erkennen
-- ungültigen Input behandeln
+Das Schwierigste ist tatsächlich die Verarbeitung des Inputs (extractor.py). Momentan gibt es noch folgende Probleme:
+- ungültige Orte erkennen (bsp.: "in Entenhausen")
+- komplexe Zeit erkennen (Uhrzeiten wie "17:30 Uhr" oder "3 Uhr nachmittags")
+- ungültigen Input, Mehrfachangaben behandeln
