@@ -2,7 +2,7 @@
 
 """
 Author: Phuc Tran Truong, Marcus Ding
-Date: 17.07.2016
+Date: 19.07.2016
 
 What it is supposed to do:
 1. chop up the user input (tokenize)
@@ -35,6 +35,28 @@ time_ex = {'früh': datetime.time(8, 0, 0, 0), 'morgen': datetime.time(8, 0, 0, 
 # Types of queries
 query_ex = {'wetter': "weather", 'regen': "rain", 'wind': "wind", 'windig': "wind", 'temperatur': "temperature", 'regnen': "rainy", 'regnet': "rainy", 'regenschirm': "rainy", 'sonne': "sunny", 'sonnig': "sunny", 'luftfeuchtigkeit': "humidity", 'sonnenaufgang': "sunrise", 'sonnenuntergang': "sunset", 'warm': "temperature", 'kalt': "temperature", 'bewölkt': "cloudy", 'wolke': "cloudy", 'nebel': "foggy", 'benebelt': "foggy", 'hurricane': "hurricane", 'schnee': "snowy", 'schneit': "snowy", 'schneien': "snowy", 'sturm': "stormy", 'stürmisch': "stormy", 'unwetter': "stormy", 'schön': "weather", 'schlecht': "weather", 'grillen': "bbq", 'segeln': "sailing", 'fahrrad': "bike", 'fahrradfahren': "bike", 'schwimmen': "swim", 'surfen': "surfing", 'jacke': "temperature"}
 
+# interprets specific time of day
+def get_spec_time(clock):
+    # split into hour and minute, ignore seconds etc.
+    hm_clock = clock.split(':', maxsplit=2)
+    # check for invalid values, return the max/min possible value
+    if int(hm_clock[0]) > 23:
+        return datetime.time(23, 59, 0, 0)
+    if int(hm_clock[0]) < 0:
+        return datetime.time(0, 0, 0, 0)
+    # if the minutes are specified
+    if len(hm_clock) > 1:
+        if int(hm_clock[1]) > 59:
+            return datetime.time(int(hm_clock[0]), 59, 0, 0)
+        elif int(hm_clock[1]) < 0:
+            return datetime.time(int(hm_clock[0]), 0, 0, 0)
+        else:
+            # everything went ok
+            return datetime.time(int(hm_clock[0]), int(hm_clock[1]), 0, 0)
+    else:
+        # only the hour was spcified
+        return datetime.time(int(hm_clock[0]), 0, 0, 0)
+
 # takes the user input and checks for date/time expressions from date_ex
 def get_time(time):
     # default
@@ -45,15 +67,20 @@ def get_time(time):
             the_date = date_ex[d]
     # default
     the_time = datetime.datetime.now().time()
-    # check for specific time is specified, only the hour, fails otherwise
+    # check for specific time of day
     try:
-        the_time = datetime.time(int(time[time.index("uhr")-1]), 0, 0, 0)
+        # search for 'um'
+        the_time = get_spec_time(time[time.index("um")+1])
     except (TypeError, ValueError) as e:
-        # check for time expression
-        print("Error")
-        for t in time:
-            if t in time_ex.keys():
-                the_time = time_ex[t]
+        try:
+            # search for 'uhr' instead
+            the_time = get_spec_time(time[time.index("uhr")-1])
+        except (TypeError, ValueError) as e:
+            # no specific time of day: check for time expression
+            print("Error")
+            for t in time:
+                if t in time_ex.keys():
+                    the_time = time_ex[t]
     return datetime.datetime.combine(the_date, the_time)
 
 # locate User for default location/if the location is not specified

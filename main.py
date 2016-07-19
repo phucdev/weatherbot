@@ -4,7 +4,7 @@
 # Weather Bot to reply to Telegram messages
 """
 Author: Phuc Tran Truong, Marcus Ding
-Date: 17.07.2016
+Date: 19.07.2016
 
 Large parts of the code are taken from the Conversationbot example (see 'python-telegram-bot' module).
 https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/conversationbot.py
@@ -37,6 +37,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
+# states of the conversation
 START, REPLY, NEXT_QUEST, LOC_UNKNOWN, TIME_UNKNOWN, LOC_TIME_UNKNOWN = range(6)
 
 TOKEN = "219296013:AAHENQyYMoWHSGs5bjPhhxHR2ai4uEHGQ7c" # token for telegram bot
@@ -44,8 +45,8 @@ TOKEN = "219296013:AAHENQyYMoWHSGs5bjPhhxHR2ai4uEHGQ7c" # token for telegram bot
 
 def start(bot, update):
     bot.sendMessage(update.message.chat_id,
-                    text='Hi! Ich bin dein Wetterbot 😍 Was willst du wissen?  '
-                         'Antworte /cancel um mich zu stoppen 😉\n\n',)
+                    text='Hi! Ich bin dein Wetterbot 🌞 Was willst du wissen?  '
+                         'Antworte mit /cancel um die Unterhaltung zu beenden 😉\n\n',)
 
     return REPLY
 
@@ -54,8 +55,8 @@ def start(bot, update):
 def start(bot, update):
     reply_keyboard = [['Wetter jetzt in Berlin', 'Temperatur jetzt in Berlin', '/cancel']]
     bot.sendMessage(update.message.chat_id,
-                    text='Hi! Ich bin dein Wetterbot 😍 Was willst du wissen?  '
-                         'Antworte /cancel um mich zu stoppen 😉\n\n',
+                    text='Hi! Ich bin dein Wetterbot 🌞 Was willst du wissen?  '
+                         'Antworte mit /cancel um die Unterhaltung zu beenden 😉\n\n',
                     reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True))
 
     return REPLY
@@ -78,6 +79,7 @@ def reply(bot, update):
     bot.sendMessage(update.message.chat_id, text='Kann ich dir sonst noch helfen? 🙄')
     return REPLY
 
+"""
 def bio(bot, update):
     user = update.message.from_user
     logger.info("Bio of %s: %s" % (user.first_name, update.message.text))
@@ -85,7 +87,7 @@ def bio(bot, update):
                     text='Thank you! I hope we can talk again some day.')
 
     return ConversationHandler.END
-
+"""
 
 def cancel(bot, update):
     user = update.message.from_user
