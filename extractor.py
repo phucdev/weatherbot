@@ -99,7 +99,7 @@ def get_location(loc):
         german.hgc_175m_600.crf.ser.gz
     """
     # Named Entity Recognizer: recognizes named entities and assigns types like location, person, organization to the entity
-    st = StanfordNERTagger('/Users/Phuc/Desktop/stanford-ner-2015-12-09/classifiers/english.muc.7class.distsim.crf.ser.gz', '/Users/Phuc/Desktop/stanford-ner-2015-12-09/stanford-ner-3.6.0.jar')
+    st = StanfordNERTagger('/stanford-ner-2015-12-09/classifiers/english.muc.7class.distsim.crf.ser.gz', '/stanford-ner-2015-12-09/stanford-ner-3.6.0.jar')
     loc_ner = st.tag(loc)
     """
     might be faster starting from back to front
